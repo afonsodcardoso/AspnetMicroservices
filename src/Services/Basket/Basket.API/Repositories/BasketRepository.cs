@@ -16,7 +16,7 @@ namespace Basket.API.Repositories
         }
 
         //Below are the CRUD operations
-        //GET all the products from the basket
+        //GET all the "ShoppingCartItems" from the "userName"'s basket
         public async Task<ShoppingCart> GetBasket(string userName)
         {
             var basket = await _redisCache.GetStringAsync(userName);
@@ -28,7 +28,7 @@ namespace Basket.API.Repositories
             return JsonConvert.DeserializeObject<ShoppingCart>(basket);
         }
 
-        //POST products to the basket
+        //POST "ShoppingCartItems" to the basket
         public async Task<ShoppingCart> UpdateBasket(ShoppingCart basket)
         {
             await _redisCache.SetStringAsync(basket.UserName, JsonConvert.SerializeObject(basket));
@@ -36,7 +36,7 @@ namespace Basket.API.Repositories
             return await GetBasket(basket.UserName);
         }
 
-        //DELETE the basket and all the products
+        //DELETE the basket and all the "ShoppingCartItems" from "userName"'s basket
         public async Task DeleteBasket(string userName)
         {
             await _redisCache.RemoveAsync(userName);

@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+option csharp_namespace = "Discount.Grpc.Protos";
+
+//write the crud operations -> expose rpc services into proto buffer file
+service DiscountProtoService {
+	rpc GetDiscount (GetDiscountRequest) returns (CouponModel);
+
+	rpc CreateDiscount (CreateDiscountRequest) returns (CouponModel);
+
+	rpc UpdateDiscount (UpdateDiscountRequest) returns (CouponModel);
+
+	rpc DeleteDiscount (DeleteDiscountRequest) returns (DeleteDiscountResponse);
+}
+
+//http request -> GET discount
+message GetDiscountRequest {
+	string productName = 1;
+}
+
+//model for the coupon table
+message CouponModel {
+	int32 id = 1;
+	string productName = 2;
+	string description = 3;
+	int32 amount = 4;
+}
+
+//http request -> GET
+message CreateDiscountRequest {
+	CouponModel coupon = 1;
+}
+
+//http request -> UPDATE
+message UpdateDiscountRequest {
+	CouponModel coupon = 1;
+}
+
+//http request -> DELETE
+message DeleteDiscountRequest {
+	string productName = 1;
+}
+
+//http response -> DELETE
+message DeleteDiscountResponse {
+	bool success = 1;
+}
